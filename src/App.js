@@ -1,25 +1,21 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import firebase from './Firestore';
 
+import Navbar from './components/layout/Navbar';
+import Entries from './components/entries/Entries';
 class App extends Component {
   render() {
+    const db = firebase.firestore();
+    db.settings({
+      timestampsInSnapshots: true
+    });
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <Navbar />
+        <div className="container">
+          <Entries />
+        </div>
       </div>
     );
   }
