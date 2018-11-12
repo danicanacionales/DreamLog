@@ -7,7 +7,7 @@ class Entries extends Component {
   getEntryList(){
     // this.state.db
     let currentComponent = this;
-    let list = new Array();
+    let list = [];
     list = list.filter(value => Object.keys(value).length !== 0);
 
     this.state.db.collection("entries").get().then(function(querySnapshot){

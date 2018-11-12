@@ -1,11 +1,13 @@
 import React from 'react';
 import Entries from '../entries/Entries';
+import AddEntry from '../entries/AddEntry';
 
 const Index = () => {
   return (
-    <React.Fragment>
+    // <React.Fragment>
+      <AddEntry />
       <Entries />
-    </React.Fragment>
+    // </React.Fragment>
   )
 }
 
