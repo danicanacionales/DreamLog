@@ -1,32 +1,10 @@
 import React, { Component } from 'react';
 import Entry from '../entries/Entry';
 // import Spinner from '../layout/Spinner';
+import AddEntry from './AddEntry';
 import firebase from '../../Firestore';
 
 class Entries extends Component {
-  getEntryList(){
-    // this.state.db
-    let currentComponent = this;
-    let list = [];
-    list = list.filter(value => Object.keys(value).length !== 0);
-
-    this.state.db.collection("entries").get().then(function(querySnapshot){
-      querySnapshot.forEach(function(documentSnapshot){
-        let data = documentSnapshot.data();
-        console.log(data);
-        var entry = { entry_id: documentSnapshot.id, entry_title: data.entry_title, entry_body: data.entry_body, entry_date: data.entry_date };
-        list.push(entry);
-      });
-
-      currentComponent.setState({
-        entry_list: list
-      });
-
-      console.log(currentComponent.state);
-    });
-
-  }
-
   constructor(props){
     super(props);
     let db = firebase.firestore();
@@ -35,15 +13,41 @@ class Entries extends Component {
     });
 
     this.state = {
-      db: db
+      db: db,
+      isNewEntry: true
     };
 
-    this.getEntryList();
+    this.getEntryList(this.state.isNewEntry);
+  }
+
+  getEntryList(bNewEntry){
+    // this.state.db
+    let currentComponent = this;
+    let list = [];
+    list = list.filter(value => Object.keys(value).length !== 0);
+
+    this.state.db.collection("entries").get().then(function(querySnapshot){
+      querySnapshot.forEach(function(documentSnapshot){
+        let data = documentSnapshot.data();
+        // console.log(data);
+        var entry = { entry_id: documentSnapshot.id, entry_title: data.entry_title, entry_body: data.entry_body, entry_date: data.entry_date };
+        list.push(entry);
+      });
+
+      currentComponent.setState({
+        entry_list: list,
+        isNewEntry: false
+      });
+
+      // console.log(currentComponent.state);
+    });
+
   }
 
   render () {
     return (
       <div>
+        <AddEntry onEntryListChange={this.getEntryList} />
         {(this.state.entry_list !== undefined || this.state.entry_list > 0) &&
           <React.Fragment>
             <div className="row">

@@ -3,7 +3,7 @@ import firebase from './Firestore';
 
 import Navbar from './components/layout/Navbar';
 import Entries from './components/entries/Entries';
-import AddEntry from './components/entries/AddEntry';
+
 
 class App extends Component {
   render() {
@@ -16,7 +16,6 @@ class App extends Component {
       <div>
         <Navbar />
         <div className="container">
-          <AddEntry />
           <Entries />
         </div>
       </div>
