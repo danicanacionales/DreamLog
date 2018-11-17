@@ -1,7 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import QRCode from 'qrcode.react';
 
 function Entry(props) {
   const { entry } = props;
+  const entry_path = window.location.protocol + "//" + window.location.host + "/entry/" + entry.entry_id;
 
   return (
     <div className="col-md-12 mb-4">
@@ -10,9 +13,11 @@ function Entry(props) {
         <div className="card-body">
           <h5 className="card-title">{entry.entry_title}</h5>
           <p className="card-text">{entry.entry_body}</p>
-          <small className="float-right">
-            See details
-          </small>
+          <Link to={`entry/${entry.entry_id}`} className="float-right">
+            <small className="text-muted">See Details</small>
+          </Link>
+          <br/>
+          <QRCode className="float-right" value={entry_path} />
         </div>
       </div>
     </div>

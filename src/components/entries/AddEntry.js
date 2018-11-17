@@ -1,67 +1,5 @@
 import React from 'react';
 import firebase from '../../Firestore';
-import Entries from './Entries';
-
-// class EntryField extends React.Component {
-//   constructor(props){
-//     super(props);
-//     let db = firebase.firestore();
-//     db.settings({
-//       timestampsInSnapshots: true
-//     });
-//
-//     this.state = {
-//       db: db,
-//       newEntryValue: ''
-//     };
-//
-//     this.handleSubmit = this.handleSubmit.bind(this);
-//     this.handleChange = this.handleChange.bind(this);
-//
-//     console.log(props);
-//   }
-//
-//   handleSubmit(e){
-//     e.preventDefault();
-//     // alert(this.state.newEntryValue);
-//     const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-//
-//     var newEntry = this.state.db.collection("entries").doc().set({
-//       entry_body: this.state.newEntryValue,
-//       entry_date: timestamp
-//     });
-//
-//     // this.props.onEntryListChange(true);
-//   }
-//
-//   handleChange(e) {
-//     // this.setState({newEntryValue: e.target.value});
-//   }
-//
-//   render() {
-//     return(
-//       <div className="col-md-12 mb-4">
-//         <div className="card">
-//           <div className="card-body">
-//             <h1>New Entry</h1>
-//             <form onSubmit={this.handleSubmit}>
-//               <div className="form-group">
-//                 <textarea className="form-control"
-//                   name="entry_field"
-//                   rows="4"
-//                   placeholder="What did you dream about last night?"
-//                   onChange={this.handleChange}
-//                   />
-//                 <button className="btn btn-outline-success btn-md float-right mt-2 mb-2"
-//                   type="submit">Submit</button>
-//               </div>
-//             </form>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
 
 class AddEntry extends React.Component {
   constructor(props){
@@ -86,15 +24,14 @@ class AddEntry extends React.Component {
 
   handleSubmit(e){
     e.preventDefault();
-    alert(this.state.newEntryValue);
     const timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
-    var newEntry = this.state.db.collection("entries").doc().set({
+    this.state.db.collection("entries").doc().set({
       entry_body: this.state.newEntryValue,
       entry_date: timestamp
     });
 
-    // this.props.onEntryListChange(true);
+    this.setState({newEntryValue: ''});
   }
 
   handleChange(e) {
@@ -125,6 +62,7 @@ class AddEntry extends React.Component {
                       rows="4"
                       placeholder="What did you dream about last night?"
                       onChange={this.handleChange}
+                      value={this.state.newEntryValue}
                       />
                     <button className="btn btn-outline-success btn-md float-right mt-2 mb-2"
                       type="submit">Submit</button>

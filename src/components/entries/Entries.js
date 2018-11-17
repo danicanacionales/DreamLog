@@ -21,26 +21,23 @@ class Entries extends Component {
   }
 
   getEntryList(bNewEntry){
-    // this.state.db
     let currentComponent = this;
-    let list = [];
-    list = list.filter(value => Object.keys(value).length !== 0);
 
-    this.state.db.collection("entries").get().then(function(querySnapshot){
+    this.state.db.collection("entries").onSnapshot(function(querySnapshot){
+      let list = [];
+      list = list.filter(value => Object.keys(value).length !== 0);
       querySnapshot.forEach(function(documentSnapshot){
-        let data = documentSnapshot.data();
-        // console.log(data);
-        var entry = { entry_id: documentSnapshot.id, entry_title: data.entry_title, entry_body: data.entry_body, entry_date: data.entry_date };
-        list.push(entry);
-      });
+          let data = documentSnapshot.data();
+          // console.log(data);
+          var entry = { entry_id: documentSnapshot.id, entry_title: data.entry_title, entry_body: data.entry_body, entry_date: data.entry_date };
+          list.push(entry);
+        });
 
-      currentComponent.setState({
-        entry_list: list,
-        isNewEntry: false
-      });
-
-      // console.log(currentComponent.state);
-    });
+        currentComponent.setState({
+          entry_list: list,
+          isNewEntry: false
+        });
+    })
 
   }
 
