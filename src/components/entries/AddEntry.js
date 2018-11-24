@@ -12,11 +12,13 @@ class AddEntry extends React.Component {
     this.state = {
       db: db,
       newEntryValue: '',
+      newEntryTitle: '',
       isShowFields: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleEntryBodyChange = this.handleEntryBodyChange.bind(this);
+    this.handleEntryTitleChange = this.handleEntryTitleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
 
     console.log(props);
@@ -28,13 +30,18 @@ class AddEntry extends React.Component {
 
     this.state.db.collection("entries").doc().set({
       entry_body: this.state.newEntryValue,
-      entry_date: timestamp
+      entry_date: timestamp,
+      entry_title: this.state.newEntryTitle
     });
 
     this.setState({newEntryValue: ''});
   }
 
-  handleChange(e) {
+  handleEntryTitleChange(e) {
+    this.setState({newEntryTitle: e.target.value});
+  }
+
+  handleEntryBodyChange(e) {
     this.setState({newEntryValue: e.target.value});
   }
 
@@ -57,11 +64,20 @@ class AddEntry extends React.Component {
                 <h1>New Entry</h1>
                 <form onSubmit={this.handleSubmit}>
                   <div className="form-group">
+                    <label htmlFor="titleInput">Dream Title</label>
+                    <input type="text"
+                      className="form-control"
+                      name="title_field"
+                      placeholder="Enter title..."
+                      value={this.state.newEntryTitle}
+                      onChange={this.handleEntryTitleChange}/>
+                  </div>
+                  <div className="form-group">
                     <textarea className="form-control"
                       name="entry_field"
                       rows="4"
                       placeholder="What did you dream about last night?"
-                      onChange={this.handleChange}
+                      onChange={this.handleEntryBodyChange}
                       value={this.state.newEntryValue}
                       />
                     <button className="btn btn-outline-success btn-md float-right mt-2 mb-2"

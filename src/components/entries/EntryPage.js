@@ -15,10 +15,27 @@ class EntryPage extends Component {
       entry_date: '',
       entry_title: ''
     };
+
+    this.getEntryDetails();
   }
 
   getEntryDetails() {
+    let currentComponent = this;
 
+    var docRef = this.state.db.collection("entries").doc(this.props.match.params.id);
+    docRef.get().then(function(doc){
+      if(doc.exists){
+        currentComponent.setState({
+          entry_body: doc.data().entry_body,
+          entry_title: doc.data().entry_title,
+          entry_date: doc.data().entry_date
+        })
+      }else{
+        console.log("No such document!");
+      }
+    }).catch(function(error){
+      console.log(error);
+    })
   }
 
   render(){
@@ -28,7 +45,8 @@ class EntryPage extends Component {
           <div className="card">
             <small className="card-header text-muted">November 3, 2018</small>
             <div className="card-body">
-              aiyo
+              <h3>{this.state.entry_title}</h3>
+              <p>{this.state.entry_body}</p>
             </div>
           </div>
         </div>

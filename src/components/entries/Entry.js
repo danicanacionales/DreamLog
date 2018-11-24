@@ -5,8 +5,9 @@ import QRCode from 'qrcode.react';
 function Entry(props) {
   const { entry } = props;
   const entry_path = window.location.protocol + "//" + window.location.host + "/entry/" + entry.entry_id;
-
+  let date = new Date(entry.entry_date.seconds);
   return (
+    console.log(date.toString()),
     <div className="col-md-12 mb-4">
       <div className="card">
         <small className="card-header text-muted">November 3, 2018</small>
